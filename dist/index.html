@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTrack checklist generator</title>
+</head>
+<body>
+
+<h1>YouTrack checklist generator</h1>
+
+<h4>Checklist</h4>
+<textarea id="checklist" cols="80" rows="20"></textarea>
+
+<h4>Envs</h4>
+<textarea id="envs" cols="30" rows="10">
+Android dev
+iOS dev
+Android prod
+iOS prod</textarea>
+
+<button id="generate">generate</button>
+<br>
+
+<h4>Result ( copy & paste to YouTrack )</h4>
+<textarea id="res" cols="30" rows="10"></textarea>
+
+<script>
+    document.getElementById('generate').addEventListener('click', function () {
+        const checklist = document.getElementById('checklist').value;
+        const envs = document.getElementById('envs').value;
+        const res = document.getElementById('res');
+
+        const checklistArr = checklist.split('\n');
+        const envsArr = envs.split('\n');
+
+        let resStr = '<table><tr>';
+
+      envsArr.forEach((env) => {
+        resStr += `<th>${env}</th>`;
+      });
+
+      resStr += '<th>Comment</th></tr>';
+
+        checklistArr.forEach( (checklistItem) => {
+          resStr += '<tr>';
+            resStr += envsArr.map((env) => `<td>
+
+- [ ]
+</td>`).join('');
+
+            resStr += `<td>${checklistItem}</td>`;
+
+            resStr += '</tr>'
+
+        });
+
+        resStr += '</table>';
+
+        res.value = resStr;
+    });
+</script>
+
+</body>
+</html>
